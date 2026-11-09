@@ -27,12 +27,6 @@
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "pages",
-    "lib/getStatic.ts",
-    "lib/redirect.tsx",
-    "lib/languageDetector.ts",
-    "lib/getCorrectHref.ts",
-    "lib/config.ts"
+    "dist"
   ]
 }

@@ -22,10 +22,6 @@
     "i18next-http-backend": "^4.0.10",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
-    "next": "15.1.6",
-    "next-i18next": "^15.4.2",
-    "next-language-detector": "^1.1.0",
-    "postcss": "^8.5.6",
     "qrcode": "^1.5.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -35,7 +31,6 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/vite": "^4.3.5",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^24.3.1",
@@ -43,7 +38,6 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.3.0",
-    "eslint-config-next": "15.1.6",
     "http-server": "14.1.1",
     "locize-cli": "8.4.0",
     "rimraf": "^6.0.1",
