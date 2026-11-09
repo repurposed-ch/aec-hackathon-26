@@ -1,9 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery } from 'convex/react';
 import { useTranslation } from 'next-i18next';
-import { AgGridReact } from 'ag-grid-react';
-import { themeQuartz, type ColDef, type RowClickedEvent, type GridReadyEvent } from 'ag-grid-community';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import type { ListingData } from '@/lib/elements';
@@ -155,120 +152,68 @@ const EditPanel: React.FC<EditPanelProps> = ({ listing, onClose, onSaved }) => {
   );
 };
 
-// ── Column definitions ────────────────────────────────────────────────────────
+// ── Columns ───────────────────────────────────────────────────────────────────
 
-const colDefs: ColDef<ListingData>[] = [
-  {
-    headerName: 'Name',
-    field: 'name',
-    flex: 2,
-    minWidth: 140,
-    filter: true,
-  },
-  {
-    headerName: 'Type',
-    field: 'type',
-    width: 100,
-    filter: true,
-  },
-  {
-    headerName: 'Colour',
-    valueGetter: (p) => (p.data as Record<string, unknown>)?.colour ?? '—',
-    width: 90,
-    filter: true,
-  },
-  {
-    headerName: 'Qty',
-    field: 'quantity',
-    width: 70,
-    type: 'numericColumn',
-    filter: 'agNumberColumnFilter',
-  },
-  {
-    headerName: 'W (mm)',
-    valueGetter: (p) => (p.data ? geomVal(p.data, 'width') : null),
-    width: 90,
-    type: 'numericColumn',
-    filter: 'agNumberColumnFilter',
-  },
-  {
-    headerName: 'H (mm)',
-    valueGetter: (p) => (p.data ? geomVal(p.data, 'height') : null),
-    width: 90,
-    type: 'numericColumn',
-    filter: 'agNumberColumnFilter',
-  },
-  {
-    headerName: 'L (mm)',
-    valueGetter: (p) => (p.data ? geomVal(p.data, 'length') : null),
-    width: 90,
-    type: 'numericColumn',
-    filter: 'agNumberColumnFilter',
-  },
-  {
-    headerName: 'Damage',
-    field: 'damage',
-    width: 85,
-    type: 'numericColumn',
-    filter: 'agNumberColumnFilter',
-  },
-  {
-    headerName: 'Available',
-    valueGetter: (p) =>
-      p.data?.availableFrom ? new Date(p.data.availableFrom).toLocaleDateString() : '—',
-    width: 110,
-    filter: true,
-  },
-  {
-    headerName: 'City',
-    valueGetter: (p) => p.data?.location?.city ?? '—',
-    flex: 1,
-    minWidth: 90,
-    filter: true,
-  },
+type Column = {
+  header: string;
+  value: (l: ListingData) => string | number | null;
+  numeric?: boolean;
+};
+
+const columns: Column[] = [
+  { header: 'Name', value: (l) => l.name },
+  { header: 'Type', value: (l) => l.type },
+  { header: 'Colour', value: (l) => ('colour' in l ? l.colour : null) },
+  { header: 'Qty', value: (l) => l.quantity, numeric: true },
+  { header: 'W (mm)', value: (l) => geomVal(l, 'width'), numeric: true },
+  { header: 'H (mm)', value: (l) => geomVal(l, 'height'), numeric: true },
+  { header: 'L (mm)', value: (l) => geomVal(l, 'length'), numeric: true },
+  { header: 'Damage', value: (l) => l.damage, numeric: true },
+  { header: 'Available', value: (l) => l.availableFrom, numeric: true },
+  { header: 'City', value: (l) => l.location?.city ?? null },
 ];
+
+const formatCell = (col: Column, l: ListingData) => {
+  const v = col.value(l);
+  if (v === null) return '—';
+  return col.header === 'Available' ? new Date(v).toLocaleDateString() : v;
+};
+
+const compare = (a: string | number | null, b: string | number | null) => {
+  if (a === b) return 0;
+  if (a === null) return 1;
+  if (b === null) return -1;
+  return typeof a === 'number' && typeof b === 'number' ? a - b : String(a).localeCompare(String(b));
+};
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 const ListingsTable: React.FC = () => {
   const { t } = useTranslation(['common', 'listing-form']);
-  const router = useRouter();
-
   const allListings = useQuery(api.listings.list);
   const listings: ListingData[] = (allListings as ListingData[] | undefined) ?? [];
 
   const [selectedListing, setSelectedListing] = useState<ListingData | null>(null);
-  const gridRef = useRef<AgGridReact<ListingData>>(null);
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState<{ col: number; dir: 1 | -1 } | null>(null);
+
+  const rows = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    const filtered = q
+      ? listings.filter((l) => columns.some((c) => String(formatCell(c, l)).toLowerCase().includes(q)))
+      : listings;
+    if (!sort) return filtered;
+    const col = columns[sort.col];
+    return [...filtered].sort((a, b) => compare(col.value(a), col.value(b)) * sort.dir);
+  }, [listings, search, sort]);
+
+  const toggleSort = (col: number) =>
+    setSort((prev) => (prev?.col !== col ? { col, dir: 1 } : prev.dir === 1 ? { col, dir: -1 } : null));
 
   const panelOpen = selectedListing !== null;
-
-  const onRowClicked = useCallback(
-    (e: RowClickedEvent<ListingData>) => {
-      if (!e.data) return;
-      setSelectedListing((prev) => (prev?._id === e.data!._id ? null : e.data!));
-    },
-    [],
-  );
-
-  const handleClose = useCallback(() => {
-    setSelectedListing(null);
-    gridRef.current?.api?.deselectAll();
-  }, []);
-
+  const handleClose = useCallback(() => setSelectedListing(null), []);
   const handleSaved = useCallback(() => {
     // Keep the panel open so the user can see the success state.
-  }, []);
-
-  const defaultColDef = useMemo<ColDef>(
-    () => ({
-      sortable: true,
-      resizable: true,
-    }),
-    [],
-  );
-
-  const onGridReady = useCallback((_e: GridReadyEvent) => {
-    // auto-size columns once data arrives
   }, []);
 
   return (
@@ -283,35 +228,59 @@ const ListingsTable: React.FC = () => {
       />
 
       <div className="w-full flex flex-row h-[calc(100svh-4.5rem)] mt-[4.5rem] overflow-hidden">
-        {/* AG Grid */}
+        {/* Table */}
         <div className={`flex flex-col transition-all duration-200 ${panelOpen ? 'w-[58%]' : 'w-full'}`}>
-          <div className="flex-1 min-h-0">
-            <AgGridReact<ListingData>
-              ref={gridRef}
-              theme={themeQuartz}
-              rowData={listings}
-              columnDefs={colDefs}
-              defaultColDef={defaultColDef}
-              rowSelection="single"
-              onRowClicked={onRowClicked}
-              onGridReady={onGridReady}
-              suppressCellFocus
-              animateRows
-              pagination
-              paginationPageSize={50}
-              className="h-full w-full"
+          <div className="shrink-0 p-2 border-b border-gray-200 text-left">
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search…"
+              className="w-full max-w-xs border border-gray-300 rounded px-2 py-1 text-sm"
             />
+          </div>
+          <div className="flex-1 min-h-0 overflow-auto">
+            <table className="w-full text-sm">
+              <thead className="sticky top-0 bg-gray-50 text-gray-600">
+                <tr>
+                  {columns.map((c, i) => (
+                    <th
+                      key={c.header}
+                      onClick={() => toggleSort(i)}
+                      className={`px-3 py-2 font-semibold whitespace-nowrap cursor-pointer select-none border-b border-gray-200 ${c.numeric ? 'text-right' : 'text-left'}`}
+                    >
+                      {c.header}
+                      {sort?.col === i ? (sort.dir === 1 ? ' ▲' : ' ▼') : ''}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((l) => (
+                  <tr
+                    key={l._id}
+                    onClick={() => setSelectedListing((prev) => (prev?._id === l._id ? null : l))}
+                    className={`cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${selectedListing?._id === l._id ? 'bg-yellow-50' : ''}`}
+                  >
+                    {columns.map((c) => (
+                      <td
+                        key={c.header}
+                        className={`px-3 py-2 whitespace-nowrap ${c.numeric ? 'text-right tabular-nums' : 'text-left'}`}
+                      >
+                        {formatCell(c, l)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
         {/* Edit panel */}
         {panelOpen && selectedListing && (
           <div className="w-[42%] border-l border-gray-200 flex flex-col bg-gray-50 overflow-hidden">
-            <EditPanel
-              listing={selectedListing}
-              onClose={handleClose}
-              onSaved={handleSaved}
-            />
+            <EditPanel listing={selectedListing} onClose={handleClose} onSaved={handleSaved} />
           </div>
         )}
       </div>

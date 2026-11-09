@@ -1,9 +1,6 @@
 import { appWithTranslation } from 'next-i18next';
 import './globals.css';
 import { useEffect } from 'react';
-import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
-
-ModuleRegistry.registerModules([AllCommunityModule]);
 import { ConvexProvider, ConvexReactClient } from 'convex/react';
 import { Id } from '@/convex/_generated/dataModel';
 import { useRepurposedStore, LOCAL_STORAGE_KEY_LIKED, LOCAL_STORAGE_KEY_DISLIKED } from '@/lib/store';
