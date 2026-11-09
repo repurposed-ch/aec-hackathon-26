@@ -1,5 +1,4 @@
-import { useTranslation } from 'next-i18next';
-import { getStaticPaths, makeStaticProps } from '../../lib/getStatic';
+import { useTranslation } from 'react-i18next';
 
 import Link from '../../components/Link';
 import { Navigation } from '@/components/Navigation';
@@ -18,15 +17,15 @@ const Homepage = () => {
       <main>
         <Navigation
           links={[
-            { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart.src} /> },
-            { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
-            { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> }
+            { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart} /> },
+            { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart} /> },
+            { href: '/', text: 'back-to-home', icon: <SVGIcon src={home} /> }
           ]}
           withoutTopMargin
         />
         <div className="max-w-standard-div standard-padding flex lg:flex-row lg:justify-center flex-col items-center justify-center gap-x-8 gap-y-2 p-4">
           <img
-            src={logo.src}
+            src={logo}
             alt="logo"
             className="w-[min(min(30svh,80svw),300px)] min-w-[min(min(30svh,80svw),200px)]"
           />
@@ -35,7 +34,7 @@ const Homepage = () => {
           </p>
         </div>
         <div>
-          <Link href="/" skipLocaleHandling={false}>
+          <Link href="/">
             <button type="button">{t('common:back-to-home')}</button>
           </Link>
         </div>
@@ -45,6 +44,3 @@ const Homepage = () => {
 };
 
 export default Homepage;
-
-const getStaticProps = makeStaticProps(['404', 'common', 'footer']);
-export { getStaticPaths, getStaticProps };

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { useMutation, useQuery } from 'convex/react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'react-i18next';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { Navigation } from '@/components/Navigation';
 import { Button } from '@/components/Button';
 import { SVGIcon } from '@/components/SVGIcon';
-import { getStaticPaths, makeStaticProps } from '@/lib/getStatic';
 import {
   type ListingType,
   type FormData,
@@ -38,11 +37,11 @@ const SuccessScreen: React.FC<{ listingId: string; t: (k: string) => string }> =
 
 const EditListing: React.FC = () => {
   const { t } = useTranslation('listing-form');
-  const router = useRouter();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const updateListing = useMutation(api.listings.update);
 
-  const rawId = router.isReady ? router.query.id : undefined;
-  const listingId = typeof rawId === 'string' ? (rawId as Id<'listings'>) : undefined;
+  const listingId = (searchParams.get('id') ?? undefined) as Id<'listings'> | undefined;
 
   const listing = useQuery(api.listings.getById, listingId ? { id: listingId } : 'skip');
 
@@ -75,15 +74,15 @@ const EditListing: React.FC = () => {
     }
   };
 
-  const isLoading = !router.isReady || (listingId !== undefined && listing === undefined);
+  const isLoading = listingId !== undefined && listing === undefined;
   const selectedType = listing?.type as ListingType | undefined;
 
   return (
     <>
       <Navigation
         links={[
-          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
-          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> },
+          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart} /> },
+          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home} /> },
         ]}
         withoutTopMargin
       />
@@ -112,7 +111,7 @@ const EditListing: React.FC = () => {
           submittingLabel={t('saving')}
           submitting={submitting}
           onSubmit={handleSubmit}
-          onBack={() => router.back()}
+          onBack={() => navigate(-1)}
         />
       )}
 
@@ -126,6 +125,3 @@ const EditListing: React.FC = () => {
 };
 
 export default EditListing;
-
-const getStaticProps = makeStaticProps(['listing-form', 'common']);
-export { getStaticPaths, getStaticProps };

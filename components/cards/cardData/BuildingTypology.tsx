@@ -30,8 +30,8 @@ const BuildingTypologyIcon: React.FC<{ category: (typeof ListingCategories)[numb
 }) => {
   switch (category) {
     case 'constructionMaterials':
-      return <SVGIcon src={constructionMaterials.src} className={sizeClass} />;
+      return <SVGIcon src={constructionMaterials} className={sizeClass} />;
     case 'buildingMaterials':
-      return <SVGIcon src={buildingMaterials.src} className={sizeClass} />;
+      return <SVGIcon src={buildingMaterials} className={sizeClass} />;
   }
 };

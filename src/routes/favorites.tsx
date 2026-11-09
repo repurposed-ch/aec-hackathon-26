@@ -1,5 +1,4 @@
-import { useTranslation } from 'next-i18next';
-import { getStaticPaths, makeStaticProps } from '../../lib/getStatic';
+import { useTranslation } from 'react-i18next';
 
 import { useRepurposedStore } from '@/lib/store';
 import { Navigation } from '@/components/Navigation';
@@ -26,8 +25,8 @@ const Favorites: React.FC = () => {
     <>
       <Navigation
         links={[
-          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
-          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> }
+          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart} /> },
+          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home} /> }
         ]}
         withoutTopMargin
       />
@@ -44,6 +43,3 @@ const Favorites: React.FC = () => {
 };
 
 export default Favorites;
-
-const getStaticProps = makeStaticProps(['common', 'building-type', 'element-type']);
-export { getStaticPaths, getStaticProps };

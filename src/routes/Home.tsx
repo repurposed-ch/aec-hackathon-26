@@ -1,6 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'next-i18next';
-import { getStaticPaths, makeStaticProps } from '../../lib/getStatic';
+import { useTranslation } from 'react-i18next';
 
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
@@ -66,6 +65,3 @@ const Homepage = () => {
 };
 
 export default Homepage;
-
-const getStaticProps = makeStaticProps(['common', 'footer']);
-export { getStaticPaths, getStaticProps };

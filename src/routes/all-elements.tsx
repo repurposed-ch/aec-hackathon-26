@@ -1,6 +1,5 @@
 import { Navigation } from '@/components/Navigation';
 import { Map } from '@/components/leaflet/LazyMap';
-import { getStaticPaths, makeStaticProps } from '@/lib/getStatic';
 import { SVGIcon } from '@/components/SVGIcon';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
@@ -17,9 +16,9 @@ export const AllElements = () => {
     <>
       <Navigation
         links={[
-          { href: 'add-listing', text: 'add-listing', icon: <SVGIcon src={add.src} /> },
-          { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart.src} /> },
-          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> }
+          { href: 'add-listing', text: 'add-listing', icon: <SVGIcon src={add} /> },
+          { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart} /> },
+          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home} /> }
         ]}
         withoutTopMargin
       />
@@ -34,6 +33,3 @@ export const AllElements = () => {
 };
 
 export default AllElements;
-
-const getStaticProps = makeStaticProps(['all-elements', 'common', 'building-type', 'element-type']);
-export { getStaticPaths, getStaticProps };

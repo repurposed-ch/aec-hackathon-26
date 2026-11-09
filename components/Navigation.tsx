@@ -15,7 +15,7 @@ export const Navigation: React.FC<{
       <div className="fixed top-0 w-[100vw] z-10000 bg-background">
         <div className="w-full max-w-[var(--default-max-width)] px-[var(--card_grid_left_right_padding)] mx-auto left-0 p-2 flex flex-row items-center justify-between">
           <Link href="/">
-            <img src={logo.src} alt="logo" className="h-12" />
+            <img src={logo} alt="logo" className="h-12" />
           </Link>
           <span className="text-sm flex flex-row items-center gap-2">
             {links.map((link) => (

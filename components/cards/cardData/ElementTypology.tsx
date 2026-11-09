@@ -33,14 +33,14 @@ const ElementTypologyIcon: React.FC<{ listingType: (typeof ListingTypes)[number]
 }) => {
   switch (listingType) {
     case 'bricks':
-      return <SVGIcon src={bricks.src} className={sizeClass} />;
+      return <SVGIcon src={bricks} className={sizeClass} />;
     case 'wood':
-      return <SVGIcon src={wood.src} className={sizeClass} />;
+      return <SVGIcon src={wood} className={sizeClass} />;
     case 'window':
-      return <SVGIcon src={window.src} className={sizeClass} />;
+      return <SVGIcon src={window} className={sizeClass} />;
     case 'tile':
-      return <SVGIcon src={tile.src} className={sizeClass} />;
+      return <SVGIcon src={tile} className={sizeClass} />;
     case 'door':
-      return <SVGIcon src={door.src} className={sizeClass} />;
+      return <SVGIcon src={door} className={sizeClass} />;
   }
 };

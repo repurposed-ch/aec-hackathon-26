@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery } from 'convex/react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'react-i18next';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import type { ListingData } from '@/lib/elements';
@@ -15,7 +15,6 @@ import {
   buildListingPayload,
   listingToForm,
 } from '@/components/listing-form/Shared';
-import { getStaticPaths, makeStaticProps } from '@/lib/getStatic';
 import { TYPE_ICONS } from '@/lib/typeIcons';
 
 import home from '/assets/icons/home.svg';
@@ -219,8 +218,8 @@ const ListingsTable: React.FC = () => {
     <>
       <Navigation
         links={[
-          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
-          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> },
+          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart} /> },
+          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home} /> },
         ]}
         withoutTopMargin
       />
@@ -287,6 +286,3 @@ const ListingsTable: React.FC = () => {
 };
 
 export default ListingsTable;
-
-const getStaticProps = makeStaticProps(['listing-form', 'common']);
-export { getStaticPaths, getStaticProps };

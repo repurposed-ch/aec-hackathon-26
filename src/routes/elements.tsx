@@ -1,5 +1,4 @@
-import { useRouter } from 'next/router';
-import { makeStaticProps, getStaticPaths } from '../../lib/getStatic';
+import { useSearchParams } from 'react-router';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
@@ -12,26 +11,23 @@ import home from '/assets/icons/home.svg';
 import edit from '/assets/icons/customize.svg';
 
 export const Element = () => {
-  const router = useRouter();
-
-  // Query param ?id=<convex-id> — only readable after hydration.
-  const rawId = router.isReady ? router.query.id : undefined;
-  const listingId = typeof rawId === 'string' ? (rawId as Id<'listings'>) : undefined;
+  const [searchParams] = useSearchParams();
+  const listingId = (searchParams.get('id') ?? undefined) as Id<'listings'> | undefined;
 
   const listing = useQuery(
     api.listings.getById,
     listingId ? { id: listingId } : 'skip'
   );
 
-  const isLoading = !router.isReady || (listingId !== undefined && listing === undefined);
+  const isLoading = listingId !== undefined && listing === undefined;
 
   return (
     <>
       <Navigation
         links={[
-          ...(listingId ? [{ href: `edit-listing?id=${listingId}`, text: 'edit-listing', icon: <SVGIcon src={edit.src} /> }] : []),
-          { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart.src} /> },
-          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> },
+          ...(listingId ? [{ href: `edit-listing?id=${listingId}`, text: 'edit-listing', icon: <SVGIcon src={edit} /> }] : []),
+          { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart} /> },
+          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home} /> },
         ]}
       />
       <main className="w-[calc(min(100vw,1200px)-50px)] mx-auto">
@@ -54,6 +50,3 @@ export const Element = () => {
 };
 
 export default Element;
-
-const getStaticProps = makeStaticProps(['common', 'footer', 'building-type', 'element-type']);
-export { getStaticPaths, getStaticProps };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'react-i18next';
 import { ListingTypes } from '@/lib/elements';
 import { COLOUR_SWATCHES, type Colour, type GeoUnion, type ListingType } from '@/lib/listingFilters';
 import { TYPE_ICONS } from '@/lib/typeIcons';

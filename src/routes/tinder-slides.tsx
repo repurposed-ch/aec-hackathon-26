@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { getStaticPaths, makeStaticProps } from '@/lib/getStatic';
 import { Navigation } from '@/components/Navigation';
 
 import { useState } from 'react';
@@ -34,9 +33,9 @@ export const TinderSlides = () => {
     <>
       <Navigation
         links={[
-          { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart.src} /> },
-          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
-          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> }
+          { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart} /> },
+          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart} /> },
+          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home} /> }
         ]}
         withoutTopMargin
       />
@@ -73,6 +72,3 @@ export const TinderSlides = () => {
 };
 
 export default TinderSlides;
-
-const getStaticProps = makeStaticProps(['common', 'navigation']);
-export { getStaticPaths, getStaticProps };

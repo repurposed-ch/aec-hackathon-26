@@ -1,6 +1,5 @@
 import { Navigation } from '@/components/Navigation';
 import { SVGIcon } from '@/components/SVGIcon';
-import { getStaticPaths, makeStaticProps } from '@/lib/getStatic';
 import { ListingTypes, type ListingData } from '@/lib/elements';
 import {
   ALL_COLOURS, Colour,
@@ -10,9 +9,9 @@ import {
 } from '@/lib/listingFilters';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router';
+import { useState } from 'react';
 import { TYPE_ICONS } from '@/lib/typeIcons';
 import { ColourMultiSelect, GeomFilterDropdown, TypeMultiSelect } from '@/components/filters/ListingFilters';
 
@@ -114,7 +113,7 @@ const CoverageCard: React.FC<{
 const AreaComposer = () => {
   const { t } = useTranslation('area-composer');
   const { t: tc } = useTranslation('common');
-  const router = useRouter();
+  const [searchParams, setSearchParams] = useSearchParams();
   const listings = useQuery(api.listings.list) ?? [];
 
   // ── URL is the single source of truth for all filter state ────────────────
@@ -124,23 +123,23 @@ const AreaComposer = () => {
   // updateQuery merges a patch into the current query, removing undefined keys,
   // and replaces the URL shallowly (no full re-render / no history entry).
 
-  const q = router.query;
+  const q: Record<string, string | undefined> = Object.fromEntries(searchParams);
 
   const updateQuery = (patch: Record<string, string | undefined>) => {
-    const next: Record<string, string | string[]> = {};
+    const next: Record<string, string> = {};
     // Carry over existing params, then apply patch
     for (const [k, v] of Object.entries({ ...q, ...patch })) {
-      if (v !== undefined) next[k] = v as string | string[];
+      if (v !== undefined) next[k] = v;
     }
-    router.replace({ pathname: router.pathname, query: next }, undefined, { shallow: true });
+    setSearchParams(next, { replace: true });
   };
 
   // ── Derive state from URL ─────────────────────────────────────────────────
 
-  const area = router.isReady && q.area ? Math.max(0, Number(q.area)) : 0;
+  const area = q.area ? Math.max(0, Number(q.area)) : 0;
 
   const activeTypes: Set<ListingType> = new Set(
-    router.isReady && q.types
+    q.types
       ? (String(q.types)
           .split(',')
           .filter((t) => (ListingTypes as readonly string[]).includes(t)) as ListingType[])
@@ -148,7 +147,7 @@ const AreaComposer = () => {
   );
 
   const activeColours: Set<Colour> = new Set(
-    router.isReady && q.colours
+    q.colours
       ? (String(q.colours)
           .split(',')
           .filter((c) => (ALL_COLOURS as readonly string[]).includes(c)) as Colour[])
@@ -175,12 +174,7 @@ const AreaComposer = () => {
     : [0, 0];
 
   // ── Area input: local string so decimal points survive mid-type ───────────
-  const [areaStr, setAreaStr] = useState('');
-  useEffect(() => {
-    // One-time sync from URL when router is ready
-    if (router.isReady) setAreaStr(q.area ? String(q.area) : '');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.isReady]);
+  const [areaStr, setAreaStr] = useState(q.area ?? '');
 
   const handleAreaChange = (raw: string) => {
     setAreaStr(raw);
@@ -349,8 +343,8 @@ const AreaComposer = () => {
     <>
       <Navigation
         links={[
-          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={listIcon.src} /> },
-          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> }
+          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={listIcon} /> },
+          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home} /> }
         ]}
       />
 
@@ -486,6 +480,3 @@ const AreaComposer = () => {
 };;
 
 export default AreaComposer;
-
-const getStaticProps = makeStaticProps(['area-composer', 'common', 'element-type']);
-export { getStaticPaths, getStaticProps };

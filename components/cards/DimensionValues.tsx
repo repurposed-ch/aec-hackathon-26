@@ -29,11 +29,11 @@ export const DimensionValues: React.FC<{
   return (
     <div className={`flex flex-col gap-1`}>
       <span className={spanClass}>
-        <SVGIcon src={axii.src} className={sizeClass} />
+        <SVGIcon src={axii} className={sizeClass} />
         <span className={sizeClass}>{cross}</span>
       </span>
       <span className={spanClass}>
-        <SVGIcon src={length.src} className={sizeClass} />
+        <SVGIcon src={length} className={sizeClass} />
         <span className={sizeClass}>{long}</span>
       </span>
     </div>

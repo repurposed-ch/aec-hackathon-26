@@ -23,13 +23,13 @@ export const LikeButton: React.FC<{ element: ListingData; detailLevel: (typeof C
 
   return detailLevel === 'content' ? (
     <Button onClick={toggleLike}>
-      <SVGIcon src={isLiked ? heart.src : brokenHeart.src} className="h-5 my-auto" />
+      <SVGIcon src={isLiked ? heart : brokenHeart} className="h-5 my-auto" />
       {t('favorites')}
     </Button>
   ) : (
     <SVGIcon
       onClick={toggleLike}
-      src={isLiked ? heart.src : brokenHeart.src}
+      src={isLiked ? heart : brokenHeart}
       className="h-5 my-auto cursor-pointer hover:scale-110 transition-all duration-300"
     />
   );

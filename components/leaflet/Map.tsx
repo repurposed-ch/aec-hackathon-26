@@ -6,7 +6,7 @@ import 'leaflet-defaulticon-compatibility';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import { ListingData } from '@/lib/elements';
 import * as Leaflet from 'leaflet';
-import { useRouter } from 'next/router';
+import { useLocation } from 'react-router';
 import { useRepurposedStore } from '@/lib/store';
 import repurposedIcon from '/assets/icons/repurposed_heart.svg';
 
@@ -23,12 +23,12 @@ const getCenter = (elements: LocatedListing[]) =>
 
 export const Map: React.FC<{ elements: ListingData[]; className: string }> = ({ elements, className }) => {
   const located = elements.filter((e): e is LocatedListing => !!e.location);
-  const router = useRouter();
+  const { pathname } = useLocation();
   const setFocusedListingId = useRepurposedStore((s) => s.setFocusedListingId);
 
   if (located.length === 0) return null;
 
-  const isAllElements = router.pathname.includes('all-elements');
+  const isAllElements = pathname.includes('all-elements');
 
   return (
     <MapContainer
@@ -54,7 +54,7 @@ export const Map: React.FC<{ elements: ListingData[]; className: string }> = ({ 
       {located.map((element) => (
         <Marker
           icon={Leaflet.divIcon({
-            html: `<img src="${repurposedIcon.src}" style="width:100%;height:100%" /></div>`,
+            html: `<img src="${repurposedIcon}" style="width:100%;height:100%" /></div>`,
             iconSize: [20, 20],
             iconAnchor: [10, 10],
             className: ''

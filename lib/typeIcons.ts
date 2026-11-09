@@ -7,9 +7,9 @@ import tileIcon from '/assets/icons/element-typology/tile.svg';
 import doorIcon from '/assets/icons/element-typology/door.svg';
 
 export const TYPE_ICONS: Record<(typeof ListingTypes)[number], string> = {
-  bricks: bricksIcon.src,
-  wood: woodIcon.src,
-  window: windowIcon.src,
-  tile: tileIcon.src,
-  door: doorIcon.src
+  bricks: bricksIcon,
+  wood: woodIcon,
+  window: windowIcon,
+  tile: tileIcon,
+  door: doorIcon
 };

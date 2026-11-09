@@ -84,7 +84,7 @@
 }
 
 
-#__next {
+#root {
   font-family: 'Poppins', sans-serif;
   text-align: center;
   background: var(--color-background);
@@ -159,7 +159,7 @@ main.configurator-main * {
   text-align: left;
 }
 
-#__next:has(.configurator-main) {
+#root:has(.configurator-main) {
   min-height: unset;
   height: 100dvh;
   overflow: hidden;
@@ -175,7 +175,7 @@ main.configurator-main * {
     overflow: auto;
   }
 
-  #__next:has(.configurator-main) {
+  #root:has(.configurator-main) {
     height: auto;
     overflow: auto;
   }

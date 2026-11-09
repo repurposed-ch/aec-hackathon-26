@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useMutation } from 'convex/react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'react-i18next';
 import { api } from '@/convex/_generated/api';
 import { Navigation } from '@/components/Navigation';
 import { Button } from '@/components/Button';
 import { SVGIcon } from '@/components/SVGIcon';
-import { getStaticPaths, makeStaticProps } from '@/lib/getStatic';
 import {
   type ListingType,
   type FormData,
@@ -65,8 +64,8 @@ const AddListing: React.FC = () => {
     <>
       <Navigation
         links={[
-          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
-          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> },
+          { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart} /> },
+          { href: '/', text: 'back-to-home', icon: <SVGIcon src={home} /> },
         ]}
         withoutTopMargin
       />
@@ -111,6 +110,3 @@ const AddListing: React.FC = () => {
 };
 
 export default AddListing;
-
-const getStaticProps = makeStaticProps(['listing-form', 'common']);
-export { getStaticPaths, getStaticProps };

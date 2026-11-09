@@ -85,7 +85,7 @@ export const ElementContentCard: React.FC<ICardContentProps & { highlighted?: bo
     }
     setPdfState({ status: 'generating' });
     try {
-      const elementUrl = `${window.location.origin}/${window.location.pathname.split('/')[1]}/elements/?id=${element._id}`;
+      const elementUrl = `${window.location.origin}${import.meta.env.BASE_URL}elements?id=${element._id}`;
       const qrDataUrl = await QRCode.toDataURL(elementUrl, { width: 160, margin: 1 });
       const technicalDrawings = await generateListingDrawingSet(previewSpec);
       const blob = await pdf(
@@ -162,7 +162,7 @@ export const ElementContentCard: React.FC<ICardContentProps & { highlighted?: bo
               )}
             </button>
             <Button href={getMailTo(element)} tooltip={'Demo Mode'} disabled dontLocalizedHref>
-              <SVGIcon src={cart.src} className="h-4 my-auto" />
+              <SVGIcon src={cart} className="h-4 my-auto" />
               {t('buy')}
             </Button>
           </div>

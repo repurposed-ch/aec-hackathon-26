@@ -23,7 +23,7 @@ export const ElementDataContent: React.FC<{ element: ListingData; detailLevel: (
       <ElementTypology {...props} sizeClass={sizeClass} />
       {props.detailLevel === 'content' ? (
         <IconText
-          icon={<SVGIcon src={amount.src} className={sizeClass} />}
+          icon={<SVGIcon src={amount} className={sizeClass} />}
           text={props.element.quantity.toString()}
           sizeClass={sizeClass}
         />

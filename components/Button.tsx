@@ -1,7 +1,6 @@
-import { useRouter } from 'next/router';
+import { Link } from 'react-router';
 import { Tooltip } from './Tooltip';
-import { navigateTo } from '@/lib/getCorrectHref';
-import Link from 'next/link';
+import { toAppPath } from './Link';
 
 const baseStyle =
   'p-2 shadow-xl border-1 flex flex-row gap-2 justify-center items-center transition-all duration-400 hover:shadow-2xl';
@@ -20,8 +19,6 @@ export const Button: React.FC<{
   href?: string;
   dontLocalizedHref?: boolean;
 }> = ({ children, className, onClick, disabled, tooltip, href, dontLocalizedHref = false }) => {
-  const router = useRouter();
-
   return (
     <Tooltip text={tooltip}>
       {href ? (
@@ -30,7 +27,7 @@ export const Button: React.FC<{
             {children}
           </a>
         ) : (
-          <Link href={navigateTo(router.asPath, href)} className={getStyle(disabled, className)} title={tooltip}>
+          <Link to={toAppPath(href)} className={getStyle(disabled, className)} title={tooltip}>
             {children}
           </Link>
         )

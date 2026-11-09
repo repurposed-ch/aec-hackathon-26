@@ -468,8 +468,8 @@ export const DoorFields: React.FC<{
 
 // ── LM Studio AI autofill ────────────────────────────────────────────────────
 
-const LM_STUDIO_BASE_URL = process.env.NEXT_PUBLIC_LM_STUDIO_BASE_URL ?? 'http://localhost:1234';
-const LM_STUDIO_MODEL = process.env.NEXT_PUBLIC_LM_STUDIO_MODEL ?? 'qwen/qwen3-vl-8b';
+const LM_STUDIO_BASE_URL = import.meta.env.VITE_LM_STUDIO_BASE_URL ?? 'http://localhost:1234';
+const LM_STUDIO_MODEL = import.meta.env.VITE_LM_STUDIO_MODEL ?? 'qwen/qwen3-vl-8b';
 
 async function toBase64(url: string): Promise<{ base64: string; mimeType: string }> {
   const res = await fetch(url);
