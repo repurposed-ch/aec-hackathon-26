@@ -1,4 +1,4 @@
-name: Deploy Next.js site to Pages
+name: Deploy site to Pages
 
 on:
   push:
@@ -44,16 +44,16 @@ jobs:
         id: setup_pages
         uses: actions/configure-pages@v5
 
-      - name: Build with Next.js
+      - name: Build with Vite
         run: bun run build
         env:
           PAGES_BASE_PATH: ${{ steps.setup_pages.outputs.base_path }}
-          NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
+          VITE_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./dist
 
   deploy:
     environment:
