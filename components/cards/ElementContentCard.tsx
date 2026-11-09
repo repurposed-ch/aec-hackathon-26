@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import dynamic from 'next/dynamic';
 import { pdf } from '@react-pdf/renderer';
 import QRCode from 'qrcode';
 import { useTranslation } from 'react-i18next';
@@ -20,12 +19,6 @@ const EMAIL = 'info@jonasward.ch';
 
 const getMailTo = (element: ListingData) =>
   `mailto:${EMAIL}?subject=Listing ${element.name}&body=I am interested in the listing ${element.name} (${element.type}). I would like to know more about it and how to purchase it.`;
-
-// Lazy-load PDFRenderer (PDF.js / WASM must not run on SSR)
-const PDFRenderer = dynamic(
-  () => import('@/components/viewers/PDFRenderer').then((m) => m.PDFRenderer),
-  { ssr: false },
-);
 
 // ── PDF preview modal ─────────────────────────────────────────────────────────
 
@@ -65,7 +58,7 @@ const PDFModal: React.FC<PDFModalProps> = ({ blobUrl, filename, onClose }) => (
 
       {/* PDF viewer */}
       <div className="flex-1 min-h-0 overflow-hidden">
-        <PDFRenderer source={blobUrl} className="h-full" />
+        <iframe title={filename} src={blobUrl} className="w-full h-[80svh] border-0" />
       </div>
     </div>
   </div>
