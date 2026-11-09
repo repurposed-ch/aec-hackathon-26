@@ -33,7 +33,6 @@ export const TinderSlides = () => {
   return (
     <>
       <Navigation
-        heading={t('heading')}
         links={[
           { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart.src} /> },
           { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },

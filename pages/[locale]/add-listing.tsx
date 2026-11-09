@@ -71,7 +71,6 @@ const AddListing: React.FC = () => {
   return (
     <>
       <Navigation
-        heading={t('page-title')}
         links={[
           { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
           { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> },

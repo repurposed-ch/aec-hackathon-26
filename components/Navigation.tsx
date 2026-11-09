@@ -5,7 +5,6 @@ import Link from './Link';
 import { PlaceholderIcon } from './iconography/PlaceholderIcon';
 
 export const Navigation: React.FC<{
-  heading: string;
   links: { href: string; text: string; icon?: React.ReactNode }[];
   withoutTopMargin?: boolean;
 }> = ({ links, withoutTopMargin = false }) => {

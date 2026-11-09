@@ -16,7 +16,6 @@ export const AllElements = () => {
   return (
     <>
       <Navigation
-        heading={'all-elements'}
         links={[
           { href: 'add-listing', text: 'add-listing', icon: <SVGIcon src={add.src} /> },
           { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart.src} /> },

@@ -540,7 +540,6 @@ const AreaComposer = () => {
   return (
     <>
       <Navigation
-        heading="area-composer"
         links={[
           { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={listIcon.src} /> },
           { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> }

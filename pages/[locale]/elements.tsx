@@ -28,7 +28,6 @@ export const Element = () => {
   return (
     <>
       <Navigation
-        heading={'heading'}
         links={[
           ...(listingId ? [{ href: `edit-listing?id=${listingId}`, text: 'edit-listing', icon: <SVGIcon src={edit.src} /> }] : []),
           { href: 'favorites', text: 'to-favorites', icon: <SVGIcon src={heart.src} /> },

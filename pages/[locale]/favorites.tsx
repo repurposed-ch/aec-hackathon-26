@@ -25,7 +25,6 @@ const Favorites: React.FC = () => {
   return (
     <>
       <Navigation
-        heading={'heading'}
         links={[
           { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
           { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> }

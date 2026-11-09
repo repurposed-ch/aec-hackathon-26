@@ -88,7 +88,6 @@ const EditListing: React.FC = () => {
   return (
     <>
       <Navigation
-        heading={t('edit-page-title')}
         links={[
           { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
           { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> },

@@ -189,7 +189,6 @@ const compare = (a: string | number | null, b: string | number | null) => {
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 const ListingsTable: React.FC = () => {
-  const { t } = useTranslation(['common', 'listing-form']);
   const allListings = useQuery(api.listings.list);
   const listings: ListingData[] = (allListings as ListingData[] | undefined) ?? [];
 
@@ -219,7 +218,6 @@ const ListingsTable: React.FC = () => {
   return (
     <>
       <Navigation
-        heading={t('listings-table', { ns: 'common' })}
         links={[
           { href: 'all-elements', text: 'to-all-elements', icon: <SVGIcon src={cart.src} /> },
           { href: '/', text: 'back-to-home', icon: <SVGIcon src={home.src} /> },
