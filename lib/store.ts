@@ -45,8 +45,11 @@ export const useRepurposedStore = create<RepurposedStore>((set, get) => ({
   },
   addDisliked: (disliked) => get()._updateDisliked(new Set([...get().disliked, disliked])),
   removeLiked: (likedId) => {
-    const liked = get().liked;
-    if (liked.delete(likedId)) get()._updateLiked(new Set([...liked]));
+    const liked = new Set(get().liked);
+    if (liked.delete(likedId)) get()._updateLiked(liked);
   },
-  removeDisliked: (disliked) => get()._updateDisliked(new Set([...get().disliked, disliked]))
+  removeDisliked: (dislikedId) => {
+    const disliked = new Set(get().disliked);
+    if (disliked.delete(dislikedId)) get()._updateDisliked(disliked);
+  }
 }));
