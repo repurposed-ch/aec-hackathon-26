@@ -7,8 +7,7 @@
     "postbuild": "cp dist/index.html dist/404.html",
     "preview": "vite preview",
     "start": "bun run dev",
-    "lint": "next lint",
-    "test": "bun run lint",
+    "test": "tsc --noEmit",
     "serve": "http-server dist -p 8080",
     "downloadLocales": "locize download --project-id=0842ada9-1d1d-4d48-ab27-08f6a132f558 --ver=latest --clean=true --path=./public/locales",
     "clean": "rimraf dist"
