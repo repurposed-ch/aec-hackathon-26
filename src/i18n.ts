@@ -18,12 +18,17 @@ i18n
     defaultNS: 'common',
     // Translations stay in public/locales so `bun run downloadLocales` keeps working.
     backend: { loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json` },
-    detection: { order: ['localStorage', 'navigator'], caches: ['localStorage'] },
+    // ?lang=de forces a language (and remembers it); otherwise the saved choice, then the browser's.
+    detection: {
+      order: ['querystring', 'localStorage', 'navigator'],
+      lookupQuerystring: 'lang',
+      caches: ['localStorage']
+    },
     interpolation: { escapeValue: false }
   });
 
 i18n.on('languageChanged', (lng) => {
-  document.documentElement.lang = lng;
+  document.documentElement.lang = i18n.resolvedLanguage ?? lng;
 });
 
 export default i18n;
