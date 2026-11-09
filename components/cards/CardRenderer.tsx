@@ -10,20 +10,9 @@ import { useRepurposedStore } from '@/lib/store';
 import { ElementContentCard } from './ElementContentCard';
 import { ElementMinimalCard } from './ElementMinimalCard';
 import { useTranslation } from 'react-i18next';
+import { TYPE_ICONS } from '@/lib/typeIcons';
 
-import bricksIcon from '/assets/icons/element-typology/bricks.svg';
-import woodIcon from '/assets/icons/element-typology/wood.svg';
-import windowIcon from '/assets/icons/element-typology/window.svg';
-import tileIcon from '/assets/icons/element-typology/tile.svg';
-import doorIcon from '/assets/icons/element-typology/door.svg';
 
-const TYPE_ICONS: Record<ListingType, string> = {
-  bricks: bricksIcon.src,
-  wood: woodIcon.src,
-  window: windowIcon.src,
-  tile: tileIcon.src,
-  door: doorIcon.src,
-};
 
 // Local alias so the existing component code is unchanged
 type Union = GeoUnion;

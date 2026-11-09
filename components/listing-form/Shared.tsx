@@ -4,12 +4,8 @@ import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { SVGIcon } from '@/components/SVGIcon';
 import { ListingData, ListingTypes } from '@/lib/elements';
+import { TYPE_ICONS } from '@/lib/typeIcons';
 
-import bricksIcon from '/assets/icons/element-typology/bricks.svg';
-import woodIcon from '/assets/icons/element-typology/wood.svg';
-import windowIcon from '/assets/icons/element-typology/window.svg';
-import tileIcon from '/assets/icons/element-typology/tile.svg';
-import doorIcon from '/assets/icons/element-typology/door.svg';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -30,13 +26,6 @@ export const TILE_COLOURS: TileColour[] = ['red', 'yellow', 'blue', 'white', 'br
 export const DOOR_TYPES: DoorType[] = ['interior', 'exterior', 'sliding', 'french'];
 export const DOOR_MATERIALS: DoorMaterial[] = ['wood', 'steel', 'aluminum', 'upvc'];
 
-export const TYPE_ICONS: Record<ListingType, string> = {
-  bricks: bricksIcon.src,
-  wood: woodIcon.src,
-  window: windowIcon.src,
-  tile: tileIcon.src,
-  door: doorIcon.src
-};
 
 // ── Form state ───────────────────────────────────────────────────────────────
 

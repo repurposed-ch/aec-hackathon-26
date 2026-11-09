@@ -9,12 +9,12 @@ import { Button } from '@/components/Button';
 import { SVGIcon } from '@/components/SVGIcon';
 import { ThreeViewerContainer } from '@/components/viewers/ThreeViewerContainer';
 import { getStaticPaths, makeStaticProps } from '@/lib/getStatic';
+import { TYPE_ICONS } from '@/lib/typeIcons';
 import { buildListingPreviewSpecFromForm } from '@/lib/openplans/listingPreview';
 import {
   type ListingType,
   type FormData,
   defaultForm,
-  TYPE_ICONS,
   CommonFields,
   buildListingPayload,
   listingToForm,

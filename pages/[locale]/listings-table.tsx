@@ -11,12 +11,12 @@ import {
   type ListingType,
   type FormData,
   defaultForm,
-  TYPE_ICONS,
   CommonFields,
   buildListingPayload,
   listingToForm,
 } from '@/components/listing-form/Shared';
 import { getStaticPaths, makeStaticProps } from '@/lib/getStatic';
+import { TYPE_ICONS } from '@/lib/typeIcons';
 
 import home from '/assets/icons/home.svg';
 import cart from '/assets/icons/shopping_cart.svg';

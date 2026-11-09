@@ -13,24 +13,12 @@ import { api } from '@/convex/_generated/api';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { TYPE_ICONS } from '@/lib/typeIcons';
 
 import home from '/assets/icons/home.svg';
 import listIcon from '/assets/icons/customize.svg';
-import bricksIcon from '/assets/icons/element-typology/bricks.svg';
-import woodIcon from '/assets/icons/element-typology/wood.svg';
-import windowIcon from '/assets/icons/element-typology/window.svg';
-import tileIcon from '/assets/icons/element-typology/tile.svg';
-import doorIcon from '/assets/icons/element-typology/door.svg';
 
 // ── Shared primitives (mirrored from CardRenderer) ────────────────────────────
-
-const TYPE_ICONS: Record<ListingType, string> = {
-  bricks: bricksIcon.src,
-  wood:   woodIcon.src,
-  window: windowIcon.src,
-  tile:   tileIcon.src,
-  door:   doorIcon.src,
-};
 
 const LOG_STEPS = 1000;
 function toLogPos(v: number, min: number, max: number) {
