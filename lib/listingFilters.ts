@@ -1,4 +1,5 @@
 import { ListingTypes } from './elements';
+import { BRICK_COLOURS, TILE_COLOURS } from '@/convex/validators';
 
 export type ListingType = (typeof ListingTypes)[number];
 export type Direction = 'horizontal' | 'vertical';
@@ -9,10 +10,10 @@ export const ALL_COLOURS = ['red', 'yellow', 'brown', 'blue', 'white', 'green'] 
 export type Colour = (typeof ALL_COLOURS)[number];
 
 export const COLOUR_OPTIONS: Record<ListingType, readonly Colour[]> = {
-  bricks: ['red', 'yellow', 'brown'],
+  bricks: BRICK_COLOURS,
   wood:   [],
   window: [],
-  tile:   ['red', 'yellow', 'brown', 'blue', 'white', 'green'],
+  tile:   TILE_COLOURS,
   door:   [],
 };
 

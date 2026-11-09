@@ -5,27 +5,28 @@ import { Id } from '@/convex/_generated/dataModel';
 import { SVGIcon } from '@/components/SVGIcon';
 import { ListingData, ListingTypes } from '@/lib/elements';
 import { TYPE_ICONS } from '@/lib/typeIcons';
-
+import {
+  BRICK_COLOURS,
+  DOOR_MATERIALS,
+  DOOR_TYPES,
+  TILE_COLOURS,
+  TILE_TYPES,
+  WINDOW_TYPES,
+  WOOD_TYPES,
+} from '@/convex/validators';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
 export type ListingType = (typeof ListingTypes)[number];
-export type WoodType = 'cedar' | 'oak' | 'pine' | 'douglas fir' | 'spruce';
-export type BrickColour = 'red' | 'yellow' | 'brown';
-export type TileColour = 'red' | 'yellow' | 'blue' | 'white' | 'brown' | 'green';
-export type TileType = 'ceramic' | 'slate' | 'terracota';
-export type WindowType = 'fixed' | 'sliding' | 'casement' | 'awning';
-export type DoorType = 'interior' | 'exterior' | 'sliding' | 'french';
-export type DoorMaterial = 'wood' | 'steel' | 'aluminum' | 'upvc';
+export type WoodType = (typeof WOOD_TYPES)[number];
+export type BrickColour = (typeof BRICK_COLOURS)[number];
+export type TileColour = (typeof TILE_COLOURS)[number];
+export type TileType = (typeof TILE_TYPES)[number];
+export type WindowType = (typeof WINDOW_TYPES)[number];
+export type DoorType = (typeof DOOR_TYPES)[number];
+export type DoorMaterial = (typeof DOOR_MATERIALS)[number];
 
-export const WOOD_TYPES: WoodType[] = ['cedar', 'oak', 'pine', 'douglas fir', 'spruce'];
-export const WINDOW_TYPES: WindowType[] = ['fixed', 'sliding', 'casement', 'awning'];
-export const TILE_TYPES: TileType[] = ['ceramic', 'slate', 'terracota'];
-export const BRICK_COLOURS: BrickColour[] = ['red', 'yellow', 'brown'];
-export const TILE_COLOURS: TileColour[] = ['red', 'yellow', 'blue', 'white', 'brown', 'green'];
-export const DOOR_TYPES: DoorType[] = ['interior', 'exterior', 'sliding', 'french'];
-export const DOOR_MATERIALS: DoorMaterial[] = ['wood', 'steel', 'aluminum', 'upvc'];
-
+export { WOOD_TYPES, WINDOW_TYPES, TILE_TYPES, BRICK_COLOURS, TILE_COLOURS, DOOR_TYPES, DOOR_MATERIALS };
 
 // ── Form state ───────────────────────────────────────────────────────────────
 
@@ -192,7 +193,7 @@ export function SelectInput<T extends string>({
   onChange
 }: {
   value: T;
-  options: T[];
+  options: readonly T[];
   onChange: (v: T) => void;
 }) {
   return (
