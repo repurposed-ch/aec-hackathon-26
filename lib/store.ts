@@ -6,8 +6,6 @@ export const LOCAL_STORAGE_KEY_DISLIKED = 'disliked';
 
 type ListingId = Id<'listings'>;
 
-export type ViewerMode = 'pdf' | 'ifc' | 'geometry';
-
 type RepurposedStore = {
   liked: Set<ListingId>;
   disliked: Set<ListingId>;
@@ -17,9 +15,6 @@ type RepurposedStore = {
   addDisliked: (disliked: ListingId) => void;
   removeLiked: (likedId: ListingId) => void;
   removeDisliked: (disliked: ListingId) => void;
-  // ── Viewer ──────────────────────────────────────────────────────────────────
-  viewerMode: ViewerMode;
-  setViewerMode: (mode: ViewerMode) => void;
   // ── Map focus ────────────────────────────────────────────────────────────────
   focusedListingId: string | null;
   setFocusedListingId: (id: string | null) => void;
@@ -28,8 +23,6 @@ type RepurposedStore = {
 export const useRepurposedStore = create<RepurposedStore>((set, get) => ({
   liked: new Set(),
   disliked: new Set(),
-  viewerMode: 'geometry',
-  setViewerMode: (mode) => set({ viewerMode: mode }),
   focusedListingId: null,
   setFocusedListingId: (id) => set({ focusedListingId: id }),
   _updateLiked: (liked) => {
